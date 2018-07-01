@@ -28,14 +28,19 @@ extension Cliclick {
     execute("c:\(formattedCoordinates(x, y))")
   }
   public func rightClick (at x: Double, _ y: Double) {
-    execute("kd:ctrl c:\(formattedCoordinates(x, y)) ku:ctrl")
+    whileHolding(.ctrl) { click(at: x, y) }
   }
   public func doubleClick (at x: Double, _ y: Double) {
     execute("dc:\(formattedCoordinates(x, y))")
   }
+  public func type (_ text: String) {
+    execute("t:\(text)")
+  }
   public func press (_ pressableKey: PressableKey) {
     execute("kp:\(pressableKey.identifier)")
   }
+  
+  
   
   public func hold (_ holdableKey: HoldableKey) {
     hold(keys: [holdableKey])
