@@ -53,7 +53,7 @@ extension Cliclick {
     unhold(keys: [holdableKey])
   }
   public func unhold (keys: [HoldableKey]) {
-    execute("kp:\(keys.formattedForCommand)")
+    execute("ku:\(keys.formattedForCommand)")
   }
   
   public func whileHolding (_ key: HoldableKey, do action: ()->()) {
