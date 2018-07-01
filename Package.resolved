@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "OSInteractor",
+        "repositoryURL": "/Users/jeremybannister/Documents/Code/Swift/Libraries/OSInteractor",
+        "state": {
+          "branch": null,
+          "revision": "c82cfb6ae9c6998be563b164699a5b00262f9c76",
+          "version": "0.1.0"
+        }
+      },
+      {
+        "package": "Shell",
+        "repositoryURL": "/Users/jeremybannister/Documents/Code/Swift/Libraries/Shell",
+        "state": {
+          "branch": null,
+          "revision": "a6be495ec2eeaa2218a35224f08dceb949a061e5",
+          "version": "0.1.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
