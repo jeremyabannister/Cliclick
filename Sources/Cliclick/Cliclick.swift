@@ -10,7 +10,7 @@ import Foundation
 import Shell
 import OSInteractor
 
-// MARK: - Initial Declaration
+// MARK: - --> Initial Declaration <--
 public struct Cliclick {
   private let shell: Shell
   
@@ -21,7 +21,7 @@ public struct Cliclick {
 
 // MARK: - Public API
 extension Cliclick {
-  public func move (to x: Double, _ y: Double) {
+  public func moveCursor (to x: Double, _ y: Double) {
     execute("m:\(formattedCoordinates(x, y))")
   }
   public func click (at x: Double, _ y: Double) {
@@ -34,7 +34,7 @@ extension Cliclick {
     execute("dc:\(formattedCoordinates(x, y))")
   }
   public func type (_ text: String) {
-    execute("t:\(text)")
+    execute("t:\"\(text)\"")
   }
   public func press (_ pressableKey: PressableKey) {
     execute("kp:\(pressableKey.identifier)")
@@ -69,7 +69,8 @@ extension Cliclick {
 // MARK: - Private
 private extension Cliclick {
   func execute (_ commands: String) {
-    let arguments = commands.trimmingCharacters(in: .whitespacesAndNewlines).components(separatedBy: " ")
+    let arguments = commands.splitIntoIndividualCommands()
+    print("here", arguments)
     shell.staggarExecution(path: "/usr/local/bin/cliclick", arguments: arguments)
   }
   
@@ -98,32 +99,52 @@ private extension HoldableKey {
 private extension PressableKey {
   var identifier: String {
     switch self {
-      case .leftArrow: return "arrow-left"
-      case .rightArrow: return "arrow-right"
-      case .upArrow: return "arrow-up"
-      case .downArrow: return "arrow-down"
-      case .delete: return "delete"
-      case .return: return "return"
-      case .enter: return "enter"
-      case .esc: return "esc"
-      case .f1: return "f1"
-      case .f2: return "f2"
-      case .f3: return "f3"
-      case .f4: return "f4"
-      case .f5: return "f5"
-      case .f6: return "f6"
-      case .f7: return "f7"
-      case .f8: return "f8"
-      case .f9: return "f9"
-      case .f10: return "f10"
-      case .f11: return "f11"
-      case .f12: return "f12"
-      case .f13: return "f13"
-      case .f14: return "f14"
-      case .f15: return "f15"
-      case .f16: return "f16"
-      case .space: return "space"
-      case .tab: return "tab"
+    case .leftArrow: return "arrow-left"
+    case .rightArrow: return "arrow-right"
+    case .upArrow: return "arrow-up"
+    case .downArrow: return "arrow-down"
+    case .delete: return "delete"
+    case .return: return "return"
+    case .enter: return "enter"
+    case .esc: return "esc"
+    case .f1: return "f1"
+    case .f2: return "f2"
+    case .f3: return "f3"
+    case .f4: return "f4"
+    case .f5: return "f5"
+    case .f6: return "f6"
+    case .f7: return "f7"
+    case .f8: return "f8"
+    case .f9: return "f9"
+    case .f10: return "f10"
+    case .f11: return "f11"
+    case .f12: return "f12"
+    case .f13: return "f13"
+    case .f14: return "f14"
+    case .f15: return "f15"
+    case .f16: return "f16"
+    case .space: return "space"
+    case .tab: return "tab"
     }
+  }
+}
+
+private extension String {
+  func splitIntoIndividualCommands () -> [String] {
+    let commandString = self.trimmingCharacters(in: .whitespacesAndNewlines)
+    let splitByQuote = commandString.components(separatedBy: "\"")
+    var individualCommands: [String] = []
+    for i in 0 ..< splitByQuote.count {
+      if i % 2 == 0 {
+        individualCommands += splitByQuote[i].components(separatedBy: " ")
+      }
+      else if individualCommands.count > 0 {
+        individualCommands[individualCommands.count - 1] = individualCommands[individualCommands.count - 1] + splitByQuote[i]
+      }
+      else {
+        individualCommands = [splitByQuote[i]]
+      }
+    }
+    return individualCommands
   }
 }
