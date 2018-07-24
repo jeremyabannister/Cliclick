@@ -145,6 +145,6 @@ private extension String {
         individualCommands = [splitByQuote[i]]
       }
     }
-    return individualCommands
+    return individualCommands.filter({ !$0.isEmpty })
   }
 }
