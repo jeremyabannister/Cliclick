@@ -70,7 +70,6 @@ extension Cliclick {
 private extension Cliclick {
   func execute (_ commands: String) {
     let arguments = commands.splitIntoIndividualCommands()
-    print("here", arguments)
     shell.staggarExecution(path: "/usr/local/bin/cliclick", arguments: arguments)
   }
   
